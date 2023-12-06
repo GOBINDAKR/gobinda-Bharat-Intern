@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Computer Blogs</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+
+      .blog {
+        margin-bottom: 20px;
+      }
+
+      .blog img {
+        max-width: 100%;
+        height: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Computer Blogs</h1>
+    <div id="blogs"></div>
+
+    <script>
+      async function fetchBlogs() {
+        const response = await fetch("http://localhost:3000/blogs");
+        const blogs = await response.json();
+
+        const blogsContainer = document.getElementById("blogs");
+
+        blogs.forEach((blog) => {
+          const blogDiv = document.createElement("div");
+          blogDiv.classList.add("blog");
+
+          const title = document.createElement("h2");
+          title.textContent = blog.title;
+
+          const content = document.createElement("p");
+          content.textContent = blog.content;
+
+          const image = document.createElement("img");
+          image.src = blog.image;
+          image.alt = blog.title;
+
+          blogDiv.appendChild(title);
+          blogDiv.appendChild(content);
+          blogDiv.appendChild(image);
+
+          blogsContainer.appendChild(blogDiv);
+        });
+      }
+
+      fetchBlogs();
+    </script>
+  </body>
+</html>
